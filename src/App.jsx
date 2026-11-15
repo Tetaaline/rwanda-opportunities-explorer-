@@ -10,6 +10,15 @@ function App() {
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [selectedCity, setSelectedCity] = useState('All')
   const [sortOrder, setSortOrder] = useState('earliest')
+  const [savedIds, setSavedIds] = useState([])
+
+  function handleToggleSave(id) {
+    setSavedIds((currentSaved) =>
+      currentSaved.includes(id)
+        ? currentSaved.filter((savedId) => savedId !== id)
+        : [...currentSaved, id]
+    )
+  }
 
   const filteredOpportunities = opportunities
     .filter((opportunity) => {
@@ -72,6 +81,7 @@ function App() {
             <h2 className="text-2xl font-bold text-[#20603D]">
               Explore opportunities
             </h2>
+
             <p className="mt-2 text-gray-600">
               Find something worth showing up for.
             </p>
@@ -93,6 +103,8 @@ function App() {
               <OpportunityCard
                 key={opportunity.id}
                 opportunity={opportunity}
+                isSaved={savedIds.includes(opportunity.id)}
+                onToggleSave={handleToggleSave}
               />
             ))}
           </div>

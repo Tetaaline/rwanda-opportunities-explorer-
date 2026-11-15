@@ -1,5 +1,5 @@
 
-function OpportunityCard({ opportunity }) {
+function OpportunityCard({ opportunity, isSaved, onToggleSave }) {
   return (
     <article className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
       <div className="mb-4 flex items-center justify-between gap-3">
@@ -28,7 +28,7 @@ function OpportunityCard({ opportunity }) {
         <p>Organized by: {opportunity.organizer}</p>
       </div>
 
-      <div className="mt-5 border-t border-gray-100 pt-4">
+      <div className="mt-5 flex items-center justify-between border-t border-gray-100 pt-4">
         <span
           className={`text-sm font-semibold ${
             opportunity.availability === 'Full'
@@ -40,6 +40,13 @@ function OpportunityCard({ opportunity }) {
         >
           {opportunity.availability}
         </span>
+
+        <button
+          onClick={() => onToggleSave(opportunity.id)}
+          className="rounded-lg border border-[#20603D] px-4 py-2 text-sm font-semibold text-[#20603D] hover:bg-[#E5F2EA]"
+        >
+          {isSaved ? '♥ Saved' : '♡ Save'}
+        </button>
       </div>
     </article>
   )
