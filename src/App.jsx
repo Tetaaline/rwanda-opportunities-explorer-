@@ -3,9 +3,11 @@ import { useState } from 'react'
 import Header from './components/Header'
 import OpportunityCard from './components/OpportunityCard'
 import SearchFilters from './components/SearchFilters'
+import OpportunityForm from './components/OpportunityForm'
 import { opportunities } from './data/opportunities'
 
 function App() {
+  const [allOpportunities, setAllOpportunities] = useState(opportunities)
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [selectedCity, setSelectedCity] = useState('All')
@@ -20,7 +22,11 @@ function App() {
     )
   }
 
-  const filteredOpportunities = opportunities
+  function handleAddOpportunity(newOpportunity) {
+    setAllOpportunities((current) => [...current, newOpportunity])
+  }
+
+  const filteredOpportunities = allOpportunities
     .filter((opportunity) => {
       const search = searchTerm.toLowerCase()
 
@@ -81,11 +87,12 @@ function App() {
             <h2 className="text-2xl font-bold text-[#20603D]">
               Explore opportunities
             </h2>
-
             <p className="mt-2 text-gray-600">
               Find something worth showing up for.
             </p>
           </div>
+
+          <OpportunityForm onAddOpportunity={handleAddOpportunity} />
 
           <SearchFilters
             searchTerm={searchTerm}
@@ -98,16 +105,26 @@ function App() {
             onSortChange={setSortOrder}
           />
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {filteredOpportunities.map((opportunity) => (
-              <OpportunityCard
-                key={opportunity.id}
-                opportunity={opportunity}
-                isSaved={savedIds.includes(opportunity.id)}
-                onToggleSave={handleToggleSave}
-              />
-            ))}
-          </div>
+          <p className="mb-4 text-sm text-gray-600">
+            Showing {filteredOpportunities.length} opportunities
+          </p>
+
+          {filteredOpportunities.length === 0 ? (
+            <p className="rounded-lg bg-white p-8 text-center text-gray-600">
+              No opportunities found. Try changing your search or filters.
+            </p>
+          ) : (
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {filteredOpportunities.map((opportunity) => (
+                <OpportunityCard
+                  key={opportunity.id}
+                  opportunity={opportunity}
+                  isSaved={savedIds.includes(opportunity.id)}
+                  onToggleSave={handleToggleSave}
+                />
+              ))}
+            </div>
+          )}
         </section>
       </main>
     </div>
