@@ -1,16 +1,71 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Rwanda Opportunities Explorer
 
-Currently, two official plugins are available:
+A responsive React application that helps people discover workshops, career events, short courses, and community activities across Rwanda.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- Browse opportunities across Rwanda.
+- Search by title, category, city, and organizer.
+- Filter opportunities by category and city.
+- Sort opportunities by date or title.
+- Save and unsave opportunities.
+- Add new opportunities using a controlled form.
+- Validate required form fields.
+- Display an empty state when no opportunities match.
+- Responsive layout for different screen sizes.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Technologies Used
 
-## Expanding the ESLint configuration
+- React
+- JavaScript
+- Vite
+- Tailwind CSS
+- HTML
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Getting Started
+
+1. Clone the repository:
+
+   ```bash
+   git clone YOUR_GITHUB_REPOSITORY_URL
+   ```
+
+2. Open the project folder:
+
+   ```bash
+   cd rwanda-opportunities-explorer
+   ```
+
+3. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+4. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+## Project Structure
+
+```text
+src/
+├── components/
+│   ├── Header.jsx
+│   ├── OpportunityCard.jsx
+│   ├── SearchFilters.jsx
+│   └── OpportunityForm.jsx
+├── data/
+│   └── opportunities.js
+├── App.jsx
+├── index.css
+└── main.jsx
+```
+
+## Data
+
+The application uses sample opportunity data stored locally in JavaScript. It does not require a backend or external API.
+
