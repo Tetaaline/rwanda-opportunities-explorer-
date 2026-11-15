@@ -1,8 +1,22 @@
 import Header from './components/Header.jsx'
 import OpportunityCard from './components/OpportunityCard.jsx'
 import { opportunities } from './data/opportunities.js'
+import { useState } from 'react'
+import SearchFilters from './components/SearchFilters'
 
 function App() {
+  const [searchTerm, setSearchTerm] = useState('')
+  const filteredOpportunities = opportunities.filter((opportunity) => {
+  const search = searchTerm.toLowerCase()
+
+  return (
+    opportunity.title.toLowerCase().includes(search) ||
+    opportunity.category.toLowerCase().includes(search) ||
+    opportunity.city.toLowerCase().includes(search) ||
+    opportunity.organizer.toLowerCase().includes(search)
+  )
+})
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
@@ -36,9 +50,14 @@ function App() {
               Find something worth showing up for.
             </p>
           </div>
+          
+          <SearchFilters
+            searchTerm={searchTerm}
+             onSearchChange={setSearchTerm}
+          />
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {opportunities.map((opportunity) => (
+            {filteredOpportunities.map((opportunity) => (
               <OpportunityCard
                 key={opportunity.id}
                 opportunity={opportunity}
