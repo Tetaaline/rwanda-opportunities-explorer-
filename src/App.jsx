@@ -1,21 +1,35 @@
-import Header from './components/Header.jsx'
-import OpportunityCard from './components/OpportunityCard.jsx'
-import { opportunities } from './data/opportunities.js'
+
 import { useState } from 'react'
+import Header from './components/Header'
+import OpportunityCard from './components/OpportunityCard'
 import SearchFilters from './components/SearchFilters'
+import { opportunities } from './data/opportunities'
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('')
-  const filteredOpportunities = opportunities.filter((opportunity) => {
-  const search = searchTerm.toLowerCase()
+  const [selectedCategory, setSelectedCategory] = useState('All')
+  const [selectedCity, setSelectedCity] = useState('All')
 
-  return (
-    opportunity.title.toLowerCase().includes(search) ||
-    opportunity.category.toLowerCase().includes(search) ||
-    opportunity.city.toLowerCase().includes(search) ||
-    opportunity.organizer.toLowerCase().includes(search)
-  )
-})
+  // Filter opportunities using search, category and city
+  const filteredOpportunities = opportunities.filter((opportunity) => {
+    const search = searchTerm.toLowerCase()
+
+    const matchesSearch =
+      opportunity.title.toLowerCase().includes(search) ||
+      opportunity.category.toLowerCase().includes(search) ||
+      opportunity.city.toLowerCase().includes(search) ||
+      opportunity.organizer.toLowerCase().includes(search)
+
+    const matchesCategory =
+      selectedCategory === 'All' ||
+      opportunity.category === selectedCategory
+
+    const matchesCity =
+      selectedCity === 'All' ||
+      opportunity.city === selectedCity
+
+    return matchesSearch && matchesCategory && matchesCity
+  })
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -41,7 +55,10 @@ function App() {
           <div className="mt-8 h-2 w-32 rounded-full bg-[#FAD201]" />
         </section>
 
-        <section id="opportunities" className="mx-auto max-w-7xl px-6 pb-20">
+        <section
+          id="opportunities"
+          className="mx-auto max-w-7xl px-6 pb-20"
+        >
           <div className="mb-8">
             <h2 className="text-2xl font-bold text-[#20603D]">
               Explore opportunities
@@ -50,10 +67,14 @@ function App() {
               Find something worth showing up for.
             </p>
           </div>
-          
+
           <SearchFilters
             searchTerm={searchTerm}
-             onSearchChange={setSearchTerm}
+            onSearchChange={setSearchTerm}
+            selectedCategory={selectedCategory}
+            onCategoryChange={setSelectedCategory}
+            selectedCity={selectedCity}
+            onCityChange={setSelectedCity}
           />
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
