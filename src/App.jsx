@@ -1,5 +1,6 @@
-
-import Header from './components/Header'
+import Header from './components/Header.jsx'
+import OpportunityCard from './components/OpportunityCard.jsx'
+import { opportunities } from './data/opportunities.js'
 
 function App() {
   return (
@@ -8,11 +9,10 @@ function App() {
 
       <main>
         <section className="mx-auto max-w-7xl px-6 py-20">
-        
           <p className="mb-4 text-sm font-bold uppercase tracking-widest">
-             <span className="text-[#007FAF]">Discover.</span>{' '}
-             <span className="text-[#B58A00]">Connect.</span>{' '}
-             <span className="text-[#20603D]">Grow.</span>
+            <span className="text-[#007FAF]">Discover.</span>{' '}
+            <span className="text-[#B58A00]">Connect.</span>{' '}
+            <span className="text-[#20603D]">Grow.</span>
           </p>
 
           <h1 className="max-w-3xl text-4xl font-bold leading-tight text-gray-900 md:text-6xl">
@@ -28,12 +28,23 @@ function App() {
         </section>
 
         <section id="opportunities" className="mx-auto max-w-7xl px-6 pb-20">
-          <h2 className="text-2xl font-bold text-[#20603D]">
-            Explore opportunities
-          </h2>
-          <p className="mt-2 text-gray-600">
-            Find something worth showing up for.
-          </p>
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold text-[#20603D]">
+              Explore opportunities
+            </h2>
+            <p className="mt-2 text-gray-600">
+              Find something worth showing up for.
+            </p>
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {opportunities.map((opportunity) => (
+              <OpportunityCard
+                key={opportunity.id}
+                opportunity={opportunity}
+              />
+            ))}
+          </div>
         </section>
       </main>
     </div>
