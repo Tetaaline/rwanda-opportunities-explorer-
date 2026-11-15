@@ -6,9 +6,11 @@ function SearchFilters({
   onCategoryChange,
   selectedCity,
   onCityChange,
+  sortOrder,
+  onSortChange,
 }) {
   return (
-    <div className="mb-8 grid gap-4 md:grid-cols-3">
+    <div className="mb-8 grid gap-4 md:grid-cols-4">
       <div>
         <label htmlFor="search" className="mb-2 block text-sm font-semibold text-gray-700">
           Search opportunities
@@ -19,7 +21,7 @@ function SearchFilters({
           value={searchTerm}
           onChange={(event) => onSearchChange(event.target.value)}
           placeholder="Search opportunities..."
-          className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 outline-none focus:border-[#007FAF]"
+          className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3"
         />
       </div>
 
@@ -55,6 +57,22 @@ function SearchFilters({
           <option value="Kigali">Kigali</option>
           <option value="Huye">Huye</option>
           <option value="Musanze">Musanze</option>
+        </select>
+      </div>
+
+      <div>
+        <label htmlFor="sort" className="mb-2 block text-sm font-semibold text-gray-700">
+          Sort by
+        </label>
+        <select
+          id="sort"
+          value={sortOrder}
+          onChange={(event) => onSortChange(event.target.value)}
+          className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3"
+        >
+          <option value="earliest">Earliest date</option>
+          <option value="latest">Latest date</option>
+          <option value="title">Title (A–Z)</option>
         </select>
       </div>
     </div>

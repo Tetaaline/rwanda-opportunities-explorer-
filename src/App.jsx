@@ -9,27 +9,39 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [selectedCity, setSelectedCity] = useState('All')
+  const [sortOrder, setSortOrder] = useState('earliest')
 
-  // Filter opportunities using search, category and city
-  const filteredOpportunities = opportunities.filter((opportunity) => {
-    const search = searchTerm.toLowerCase()
+  const filteredOpportunities = opportunities
+    .filter((opportunity) => {
+      const search = searchTerm.toLowerCase()
 
-    const matchesSearch =
-      opportunity.title.toLowerCase().includes(search) ||
-      opportunity.category.toLowerCase().includes(search) ||
-      opportunity.city.toLowerCase().includes(search) ||
-      opportunity.organizer.toLowerCase().includes(search)
+      const matchesSearch =
+        opportunity.title.toLowerCase().includes(search) ||
+        opportunity.category.toLowerCase().includes(search) ||
+        opportunity.city.toLowerCase().includes(search) ||
+        opportunity.organizer.toLowerCase().includes(search)
 
-    const matchesCategory =
-      selectedCategory === 'All' ||
-      opportunity.category === selectedCategory
+      const matchesCategory =
+        selectedCategory === 'All' ||
+        opportunity.category === selectedCategory
 
-    const matchesCity =
-      selectedCity === 'All' ||
-      opportunity.city === selectedCity
+      const matchesCity =
+        selectedCity === 'All' ||
+        opportunity.city === selectedCity
 
-    return matchesSearch && matchesCategory && matchesCity
-  })
+      return matchesSearch && matchesCategory && matchesCity
+    })
+    .toSorted((a, b) => {
+      if (sortOrder === 'latest') {
+        return new Date(b.date) - new Date(a.date)
+      }
+
+      if (sortOrder === 'title') {
+        return a.title.localeCompare(b.title)
+      }
+
+      return new Date(a.date) - new Date(b.date)
+    })
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -55,10 +67,7 @@ function App() {
           <div className="mt-8 h-2 w-32 rounded-full bg-[#FAD201]" />
         </section>
 
-        <section
-          id="opportunities"
-          className="mx-auto max-w-7xl px-6 pb-20"
-        >
+        <section id="opportunities" className="mx-auto max-w-7xl px-6 pb-20">
           <div className="mb-8">
             <h2 className="text-2xl font-bold text-[#20603D]">
               Explore opportunities
@@ -75,6 +84,8 @@ function App() {
             onCategoryChange={setSelectedCategory}
             selectedCity={selectedCity}
             onCityChange={setSelectedCity}
+            sortOrder={sortOrder}
+            onSortChange={setSortOrder}
           />
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
